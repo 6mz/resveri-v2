@@ -16,8 +16,11 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 
+# 大小
+LINENUM = 9
+TYPE = 1
 WIDTH = 720
-GRID_WIDTH = WIDTH // 10
+GRID_WIDTH = WIDTH // (LINENUM+1)
 HEIGHT = 720
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("五子棋")
@@ -50,8 +53,8 @@ def draw_background(surf):
     for line in rect_lines:
         pygame.draw.line(surf, BLACK, line[0], line[1], 2)
 
-    # 画出中间的网格线
-    for i in range(8):
+    # 2. 画出中间的网格线
+    for i in range(LINENUM-1):
         pygame.draw.line(surf, BLACK,
                          (GRID_WIDTH * (2 + i), GRID_WIDTH),
                          (GRID_WIDTH * (2 + i), HEIGHT - GRID_WIDTH))
@@ -59,16 +62,6 @@ def draw_background(surf):
                          (GRID_WIDTH, GRID_WIDTH * (2 + i)),
                          (HEIGHT - GRID_WIDTH, GRID_WIDTH * (2 + i)))
 
-#    # 画出棋盘中的五个点，围棋棋盘上为9个点，这里我们只画5个
-#    circle_center = [
-#        (GRID_WIDTH * 4, GRID_WIDTH * 4),
-#        (WIDTH - GRID_WIDTH * 4, GRID_WIDTH * 4),
-#        (WIDTH - GRID_WIDTH * 4, HEIGHT - GRID_WIDTH * 4),
-#        (GRID_WIDTH * 4, HEIGHT - GRID_WIDTH * 4),
-#        (GRID_WIDTH * 10, GRID_WIDTH * 10)
-#    ]
-#    for cc in circle_center:
-#        pygame.draw.circle(surf, BLACK, cc, 5)
 
 
 running = True
@@ -81,6 +74,7 @@ while running:
         # 检查是否关闭窗口
         if event.type == pygame.QUIT:
             running = False
+         elif event.type == pygame.MOUSEBUTTONDOWN:
 
     # 画出棋盘
     draw_background(screen)
